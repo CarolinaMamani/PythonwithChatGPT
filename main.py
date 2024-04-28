@@ -41,3 +41,8 @@ def main():
 
 if __name__ == "__main__":
     typer.run(main)
+    
+    
+    
+    
+    #https://www.youtube.com/watch?v=b8COygWdvmw&ab_channel=MoureDevbyBraisMoure
