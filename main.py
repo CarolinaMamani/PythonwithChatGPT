@@ -16,15 +16,20 @@ def main():
     
     print(table)
 
+    context = {"role":"system",
+                "content":"Eres un asistente muy util"}
+
     #contexto del asistente, es como guiarlo para donde quieres que vaya o su rol de lo que hara
-    messages = [{"role":"system",
-                "content":"Eres un asistente muy util"}]
+    messages = [context]
 
     while True: # con esto podemos seguir hablando con el
-        content = input('sobre que quieres hablar?: ') #el usuario introduce la pregunta
+        
+        content = __prompt() #el usuario introduce la pregunta
 
-        if content == "exit": #para poder parar el programa
-            break
+        if  content == "new":
+             print('Nueva Conversacion')
+             messages = [context]
+             content = __prompt()
 
         messages.append({"role":"user","content":content})
 
@@ -37,12 +42,25 @@ def main():
         #asi tendra contexto de todas las preguntas que le hacemos
         # y de todas las respuestas que nos da
         
-        print(response_contect)
+        print(f"[bold green]>[/bold green] [green]{response_contect}[/green]")
+
+#creamos una funcion privada, retorna un string
+def __prompt() -> str:
+    prompt =typer.prompt('\nsobre que quieres hablar?: ')
+    
+    if prompt == "exit": 
+       exit = typer.confirm(" Estas seguro?")
+       if exit:
+            print("Hasta luego!")
+            raise  typer.Abort() #typer maneja todo el programa entonces tambien lo puede parar
+       return __prompt
+    
+    return prompt
 
 if __name__ == "__main__":
     typer.run(main)
     
     
-    
+    #Funciona bien, pero no lo puedo usar porque no tengo chat pagado
     
     #https://www.youtube.com/watch?v=b8COygWdvmw&ab_channel=MoureDevbyBraisMoure
